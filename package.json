@@ -1,0 +1,29 @@
+{
+  "name": "blindwatchmakerjs",
+  "version": "0.0.2",
+  "description": "genetic algorithm playground in js",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/co0p/BlindWatchmakerJS.git"
+  },
+  "keywords": [
+    "genetic",
+    "algorithms",
+    "evolution",
+    "watchmaker",
+    "darwin"
+  ],
+  "author": "Julian Godesa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/co0p/BlindWatchmakerJS/issues"
+  },
+  "homepage": "https://github.com/co0p/BlindWatchmakerJS#readme",
+  "dependencies": {
+    "mocha": "^2.4.4"
+  }
+}
