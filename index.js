@@ -5,19 +5,15 @@
  */
 
 var GeneticAlgorithm = require('./algorithm/GeneticAlgorithm');
-var chromosome = require('./chromosomes/BitString');
+var BitStringChromosome = require('./algorithm/BitStringChromosome');
 
-var engine = new GeneticAlgorithm(chromosome, {
-    maxPopulation: 100,
-    maxIteration: 100
+var bitStringChromosome = new BitStringChromosome();
+
+var engine = new GeneticAlgorithm({
+  randomSeed: 123,
+  chromosome: bitStringChromosome,
+  maxPopulation: 100,
+  maxIteration: 100
 });
 
-console.log('generate initial Population');
-
-while(!engine.done()) {
-    console.log('assess');
-    console.log('recombine');
-    console.log('selection');
-}
-
-
+engine.start();

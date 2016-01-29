@@ -3,33 +3,41 @@
  * GeneticAlgorithm.js
  */
 
-// Private
-var userCount = 0;
+var chromosome = null;
+var maxPopulation = 100;
+var maxInteration = 100;
+var eliteSize = 0;
+var randomSeed = 123456;
 
-function depositeMinusFee(num1) {
-    return num1 - 0.1;
+var currentIteration = null;
+
+/** constructor */
+function GeneticAlgorithm(_options) {
+    var options = _options || {};
+
+    chromosome = options.chromosome || null;
+    if (!chromosome) {
+      throw new Error('Missing chromosome');
+    }
+
+    randomSeed = options.randomSeed || randomSeed;
+    maxPopulation = options.maxPopulation || maxPopulation;
+    maxInteration = options.maxInteration || maxInteration;
+    eliteSize = options.eliteSize || eliteSize;
 }
 
-function GeneticAlgorithm(n) {
-    this.id = userCount;
-    this.name = n;
-    this._paid = false;
-    this.balance = 0;
-    userCount++;
+function start() {
+  console.log('start');
+  population = chromosome.generate(randomSeed);
+
+  while(!done()) {
+  }
 }
 
-GeneticAlgorithm.prototype.togglePaid = function() {
-    this._paid = !this._paid;
-};
+function done() {
+  console.log('done');
+  return currentIteration === maxInteration || currentIteration === null;
+}
 
-GeneticAlgorithm.prototype.userType = function() {
-    if(this._paid) return 'Paid User';
-    else           return 'Free User';
-};
-
-GeneticAlgorithm.prototype.addBalance = function(amount) {
-    this.balance += depositeMinusFee(amount);
-};
-
-
+GeneticAlgorithm.prototype.start = start;
 module.exports = GeneticAlgorithm;
