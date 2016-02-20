@@ -1,10 +1,10 @@
 {
   "name": "blindwatchmakerjs",
   "version": "0.0.2",
-  "description": "genetic algorithm playground in js",
+  "description": "genetic algorithm playground in JS",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "node --harmony index.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/co0p/BlindWatchmakerJS#readme",
   "dependencies": {
-    "mocha": "^2.4.4"
+    "standard": "^6.0.7"
   }
 }
