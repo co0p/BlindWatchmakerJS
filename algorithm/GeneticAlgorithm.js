@@ -1,19 +1,25 @@
-class GeneticAlgorithm {
+const EventEmitter = require('events')
 
-  constructor (_options) {
-    let options = _options || {}
+class GeneticAlgorithm extends EventEmitter {
 
-    this.randomSeed = options.randomSeed || 1234567
-    this.maxPopulation = options.maxPopulation || 100
-    this.maxInteration = options.maxInteration || 100
-    this.eliteSize = options.eliteSize || 0
-    this.currentIteration = null
-    this.population = null
+  constructor (ChromosomeClass) {
+    super()
 
-    if (!options.ChromosomeClass) {
+    // we will use the following chromosome for the genetic algorithm
+    if (ChromosomeClass === undefined) {
       throw new Error('Missing ChromosomeClass class')
     }
-    this.ChromosomeClass = options.ChromosomeClass
+    this._ChromosomeClass = ChromosomeClass
+
+    // private stuff
+    this._currentIteration = null
+    this._population = null
+
+    // reasonable default settings
+    this.randomSeed = 1234567
+    this.maxPopulation = 100
+    this.maxIteration = 100
+    this.eliteSize = 0
   }
 
   /*
@@ -24,24 +30,50 @@ class GeneticAlgorithm {
   5. go back to step 2 until you are done**
   */
   start () {
-    this.currentIteration = 0
-    this.population = []
+    this._currentIteration = 0
+    this._population = []
 
     // 1. start with a randomly generated set of  candidates
     for (let i = 0; i < this.maxPopulation; i++) {
-      this.population.push(new this.ChromosomeClass(this.randomSeed))
+      this._population.push(new this._ChromosomeClass(this.randomSeed))
     }
+    this._broadcast('start')
+
     do {
       // 2. rank each candidate using a fitness function
-      for (let candidate of this.population) {
+      for (let candidate of this._population) {
         candidate.calculateFitness()
       }
 
       // TODO
 
       // 5. go back to step 2 until you are done
-      this.currentIteration++
-    } while (this.currentIteration < this.maxInteration)
+      this._broadcast('iteration')
+      this._currentIteration++
+    } while (this._currentIteration <= this.maxIteration)
+
+    this._broadcast('done')
+  }
+
+  set (_name, value) {
+    let name = _name.replace('_', _name)
+    if (Object.hasOwnProperty.call(this, name)) {
+      Object.defineProperty(this, name, { value: value })
+    }
+    return this
+  }
+
+  _broadcast (event) {
+    this.emit(event, event, {
+      'event': event,
+      'state': this.state,
+      'randomSeed': this.randomSeed,
+      'maxPopulation': this.maxPopulation,
+      'maxIteration': this.maxIteration,
+      'currentIteration': this._currentIteration,
+      'eliteSize': this.eliteSize,
+      'population': this._population
+    })
   }
 }
 

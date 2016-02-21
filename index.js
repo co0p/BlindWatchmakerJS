@@ -4,14 +4,16 @@
  * Entry point for the genetic algorithm example
  */
 
-var GeneticAlgorithm = require('./algorithm/GeneticAlgorithm')
-var BitStringChromosome = require('./algorithm/BitStringChromosome')
+const GeneticAlgorithm = require('./algorithm/GeneticAlgorithm')
+const BitStringChromosome = require('./algorithm/BitStringChromosome')
+const BasicReporter = require('./reporters/BasicReporter')
 
-var engine = new GeneticAlgorithm({
-  randomSeed: 123,
-  ChromosomeClass: BitStringChromosome,
-  maxPopulation: 100,
-  maxIteration: 100
-})
+var ga = new GeneticAlgorithm(BitStringChromosome)
+var reporter = new BasicReporter()
 
-engine.start()
+ga.set('randomSeed', 123)
+  .set('maxPopulation', 200)
+  .set('maxIteration', 150)
+
+reporter.observe(ga)
+ga.start()
