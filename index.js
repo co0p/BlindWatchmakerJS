@@ -7,11 +7,9 @@
 var GeneticAlgorithm = require('./algorithm/GeneticAlgorithm')
 var BitStringChromosome = require('./algorithm/BitStringChromosome')
 
-var bitStringChromosome = new BitStringChromosome()
-
 var engine = new GeneticAlgorithm({
   randomSeed: 123,
-  chromosome: bitStringChromosome,
+  ChromosomeClass: BitStringChromosome,
   maxPopulation: 100,
   maxIteration: 100
 })

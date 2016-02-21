@@ -11,11 +11,11 @@ class Chromosome {
     throw new Error('Not implemented')
   }
 
-  generate () {
+  recombine () {
     throw new Error('Not implemented')
   }
 
-  recombine () {
+  calculateFitness () {
     throw new Error('Not implemented')
   }
 }

@@ -14,7 +14,7 @@ class BitStringChromosome extends Chromosome {
     return [1, 2, 3]
   }
 
-  fitness (chromosome) {
+  calculateFitness () {
     return 1
   }
 }
