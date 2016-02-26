@@ -22,8 +22,5 @@
   "bugs": {
     "url": "https://github.com/co0p/BlindWatchmakerJS/issues"
   },
-  "homepage": "https://github.com/co0p/BlindWatchmakerJS#readme",
-  "dependencies": {
-    "standard": "^6.0.7"
-  }
+  "homepage": "https://github.com/co0p/BlindWatchmakerJS#readme" 
 }
