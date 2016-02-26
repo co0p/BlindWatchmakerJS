@@ -6,7 +6,11 @@
 */
 
 class Chromosome {
-  constructor (seed) { }
+  constructor () {
+    this.fitness = null
+    this.bitstring = ''
+  }
+
   generate () {
     throw new Error('Not implemented')
   }
@@ -18,5 +22,10 @@ class Chromosome {
   calculateFitness () {
     throw new Error('Not implemented')
   }
+
+  setBitstring (str) {
+    throw new Error('Not implemented')
+  }
 }
+
 module.exports = Chromosome

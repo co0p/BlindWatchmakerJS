@@ -16,6 +16,4 @@ ga.set('randomSeed', 123)
   .set('maxIteration', 150)
 
 reporter.observe(ga)
-
-
 ga.start()

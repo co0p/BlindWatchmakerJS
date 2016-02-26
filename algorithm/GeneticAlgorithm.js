@@ -1,4 +1,6 @@
 const EventEmitter = require('events')
+const seedrandom = require('seedrandom')
+const _ = require('lodash')
 
 class GeneticAlgorithm extends EventEmitter {
 
@@ -19,7 +21,8 @@ class GeneticAlgorithm extends EventEmitter {
     this.randomSeed = 1234567
     this.maxPopulation = 100
     this.maxIteration = 100
-    this.eliteSize = 0
+    this.tournamentSize = 3
+    this.selectionProbability = 0.87
   }
 
   /*
@@ -30,12 +33,16 @@ class GeneticAlgorithm extends EventEmitter {
   5. go back to step 2 until you are done**
   */
   start () {
+    // initialize random generator
+    Math.seedrandom(this.randomSeed)
+
     this._currentIteration = 0
     this._population = []
+    let elite = []
 
     // 1. start with a randomly generated set of  candidates
     for (let i = 0; i < this.maxPopulation; i++) {
-      this._population.push(new this._ChromosomeClass(this.randomSeed))
+      this._population.push(new this._ChromosomeClass())
     }
     this._broadcast('start')
 
@@ -45,7 +52,16 @@ class GeneticAlgorithm extends EventEmitter {
         candidate.calculateFitness()
       }
 
-      // TODO
+      // sort the population
+      _.sortBy(this._population, 'fitness').reverse()
+
+      // 3. selection time
+      elite = this.getElite(this._.population, this.eliteSize);
+      this._population = this.tournamentSelection(this._population, )
+
+
+      // add elite back to population
+      this._population = this._population.concat(elite)
 
       // 5. go back to step 2 until you are done
       this._broadcast('iteration')
@@ -63,16 +79,19 @@ class GeneticAlgorithm extends EventEmitter {
     return this
   }
 
+  _getPopulation () {
+    return this._population
+  }
+
   _broadcast (event) {
     this.emit(event, event, {
-      'event': event,
       'state': this.state,
       'randomSeed': this.randomSeed,
       'maxPopulation': this.maxPopulation,
       'maxIteration': this.maxIteration,
       'currentIteration': this._currentIteration,
       'eliteSize': this.eliteSize,
-      'population': this._population
+      'population': this._getPopulation() // is being reassigned; will loose reference
     })
   }
 }
